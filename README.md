@@ -42,13 +42,13 @@ public class HelloWorld {
 ```
 
 
-# Dependency Injection in Spring (Spring Tutorial 01)
+## Dependency Injection in Spring (Spring Tutorial 01)
 
-## What is Dependency Injection?
+### What is Dependency Injection?
 
 **Dependency Injection (DI)** is a design pattern used in software development, including Spring. It addresses the coupling between classes by allowing the inversion of control over their dependencies. In simpler terms, instead of a class creating its dependencies, they are injected from the outside.
 
-## Advantages of Dependency Injection
+### Advantages of Dependency Injection
 
 1. **Loose Coupling:** Dependency Injection promotes loose coupling, making it easier to modify, extend, and test code. Changes in one part of the application don't necessarily impact other parts.
 
@@ -56,7 +56,7 @@ public class HelloWorld {
 
 3. **Reusability:** Classes become more reusable as they are not tightly coupled to specific implementations of their dependencies.
 
-## Dependency Injection in Spring
+### Dependency Injection in Spring
 
 In Spring, DI is achieved through:
 
@@ -89,7 +89,7 @@ public class Car {
 }
 ```
 
-## Example: Spring Dependency Injection
+### Example: Spring Dependency Injection
 ```java
 public interface Engine {
     void start();
