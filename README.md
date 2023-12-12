@@ -184,6 +184,717 @@ Run your Spring application and navigate to http://localhost:8080 in your web br
 
 
 
+## Spring Tutorial 03 - Understanding Spring Bean Factory
+
+### Overview
+
+Welcome to Spring Tutorial 03: Understanding Spring Bean Factory. This tutorial provides a comprehensive understanding of the Spring Bean Factory, a fundamental concept in the Spring framework.
+
+### What is a Spring Bean Factory?
+
+In Spring, a **Bean Factory** is responsible for managing and creating objects, commonly known as beans. These beans are the core building blocks of a Spring application and are handled by the Spring IoC (Inversion of Control) container.
+
+### Key Concepts
+
+#### 1. Bean Definition
+
+A **bean definition** serves as a blueprint for creating an object in the Spring framework. It contains metadata about the bean, including its class, scope, constructor arguments, properties, and lifecycle callbacks.
+
+#### 2. Bean Factory Container
+
+The **Bean Factory Container** is the central interface for managing beans in a Spring application. It reads bean definitions, instantiates beans, and manages their lifecycle. Two main implementations are `XmlBeanFactory` and `ApplicationContext`.
+
+#### 3. XML Configuration (Optional)
+
+Bean definitions can be defined using XML configuration files, allowing for externalized bean configurations. This enhances separation of concerns and facilitates easy modification without altering the source code.
+
+### Creating a Simple Bean
+
+Let's create a simple example to understand the basics. Assume we have a `Car` class:
+
+```java
+public class Car {
+    private String brand;
+
+    public Car(String brand) {
+        this.brand = brand;
+    }
+
+    public void start() {
+        System.out.println("The " + brand + " car is starting.");
+    }
+}
+```
+
+Now, define a bean for this class in an XML configuration file (beans.xml):
+
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="myCar" class="com.example.Car">
+        <constructor-arg value="Toyota"/>
+    </bean>
+
+</beans>
+```
+
+Access the Spring Bean Factory in a Java application:
+
+```java
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.core.io.ClassPathResource;
+
+public class MainApp {
+
+    public static void main(String[] args) {
+        // Load the bean factory configuration
+        BeanFactory factory = new XmlBeanFactory(new ClassPathResource("beans.xml"));
+
+        // Get the car bean
+        Car myCar = (Car) factory.getBean("myCar");
+
+        // Use the car
+        myCar.start();
+    }
+}
+```
+In this example, we use the XmlBeanFactory to load the bean definitions from the beans.xml file. The getBean method is then used to retrieve the myCar bean, and finally, the start method of the Car class is invoked.
+
+
+
+## Spring Tutorial 04 - ApplicationContext and Property Initialization
+
+### Overview
+
+Welcome to Spring Tutorial 05: ApplicationContext and Property Initialization. This tutorial explores the ApplicationContext in Spring and how it facilitates property initialization for beans.
+
+### ApplicationContext
+
+The ApplicationContext is an advanced container in Spring that extends the basic BeanFactory. It offers additional features such as property initialization, environment awareness, event propagation, and more.
+
+#### Key Concepts
+
+1. **Property Initialization:** The ApplicationContext allows properties of beans to be initialized using values from configuration files.
+
+2. **ApplicationContext Types:** Different ApplicationContext implementations, such as `ClassPathXmlApplicationContext` and `FileSystemXmlApplicationContext`, provide various ways to load configurations.
+
+### Property Initialization
+
+Property initialization involves setting the values of properties in a bean using external configuration. The ApplicationContext provides a convenient way to achieve this.
+
+#### Example
+
+Assume you have a `Car` class with properties:
+
+```java
+public class Car {
+    private String brand;
+    private String model;
+
+    // getters and setters
+}
+```
+Define a bean for this class in an XML configuration file (beans.xml):
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="myCar" class="com.example.Car">
+        <property name="brand" value="Toyota"/>
+        <property name="model" value="Camry"/>
+    </bean>
+
+</beans>
+```
+Access the ApplicationContext in a Java application:
+```java
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class MainApp {
+
+    public static void main(String[] args) {
+        // Load the application context
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+
+        // Get the car bean
+        Car myCar = (Car) context.getBean("myCar");
+
+        // Use the car
+        System.out.println("Brand: " + myCar.getBrand());
+        System.out.println("Model: " + myCar.getModel());
+    }
+}
+```
+The ApplicationContext in Spring provides a powerful mechanism for property initialization, making it easy to externalize and configure bean properties. This enables greater flexibility and ease of configuration in Spring applications.
+
+In the upcoming tutorials, we'll explore more advanced topics related to Spring IoC containers and beans.
+
+
+
+## Spring Tutorial 05 - Using Constructor Injection
+
+### Overview
+
+Welcome to Spring Tutorial 06: Using Constructor Injection. This tutorial explores the concept of constructor injection in the Spring framework, demonstrating how to wire dependencies between beans using this powerful technique.
+
+### Constructor Injection
+
+Constructor injection is a method of injecting dependencies into a class through its constructor. In Spring, it is a preferred way to achieve dependency injection, providing cleaner code and promoting immutability.
+
+#### Key Concepts
+
+1. **Dependency Injection:** The process of providing a dependent object (or service) to another object (or client) is known as dependency injection. Constructor injection is one of the approaches to achieve this in Spring.
+
+2. **Constructor:** In Java, a constructor is a special method used for initializing objects. Constructor injection involves passing dependencies as parameters to the constructor.
+
+### Example
+
+Consider a `Car` class that depends on an `Engine`:
+
+```java
+public class Car {
+    private final Engine engine;
+
+    // Constructor Injection
+    public Car(Engine engine) {
+        this.engine = engine;
+    }
+
+    public void start() {
+        engine.start();
+        System.out.println("Car started!");
+    }
+}
+```
+And an Engine interface:
+```java
+public interface Engine {
+    void start();
+}
+```
+```java
+// GasolineEngine.java
+public class GasolineEngine implements Engine {
+    @Override
+    public void start() {
+        System.out.println("Gasoline engine started");
+    }
+}
+```
+```java
+// ElectricEngine.java
+public class ElectricEngine implements Engine {
+    @Override
+    public void start() {
+        System.out.println("Electric engine started");
+    }
+}
+```
+
+Let's create bean definitions for these classes in an XML configuration file (beans.xml):
+
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Define the Engine beans -->
+    <bean id="gasolineEngine" class="com.example.GasolineEngine"/>
+    <bean id="electricEngine" class="com.example.ElectricEngine"/>
+
+    <!-- Define the Car beans with constructor injection -->
+    <bean id="gasCar" class="com.example.Car">
+        <constructor-arg ref="gasolineEngine"/>
+    </bean>
+    <bean id="electricCar" class="com.example.Car">
+        <constructor-arg ref="electricEngine"/>
+    </bean>
+
+</beans>
+```
+
+Now, let's access the beans in a Java application:
+
+```java
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class MainApp {
+
+    public static void main(String[] args) {
+        // Load the application context
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+
+        // Get the car beans
+        Car gasCar = (Car) context.getBean("gasCar");
+        Car electricCar = (Car) context.getBean("electricCar");
+
+        // Use the cars
+        gasCar.start();
+        electricCar.start();
+    }
+}
+```
+In this example, the Car class receives an Engine dependency through constructor injection. Two different Engine implementations, GasolineEngine and ElectricEngine, are injected into two different Car instances.
+
+
+## Spring Tutorial 06 - Injecting Objects
+
+### Overview
+
+Welcome to Spring Tutorial 07: Injecting Objects. This tutorial explores the various ways Spring allows you to inject objects into your beans, providing flexibility and ease of managing dependencies.
+
+### Injecting Objects in Spring
+
+Injecting objects into Spring beans is a common practice for managing dependencies and promoting loose coupling. Spring offers several mechanisms to achieve object injection, including constructor injection, setter injection, and autowiring.
+
+#### Key Concepts
+
+1. **Object Injection:** In the context of Spring, object injection refers to the process of providing an instance of an object to another object as a dependency.
+
+2. **Ways to Inject Objects:** Spring supports various methods of injecting objects, including constructor injection, setter injection, and autowiring.
+
+### Example
+
+Consider a `Car` class that depends on an `Engine` and a `Driver`:
+
+```java
+public class Car {
+    private final Engine engine;
+    private final Driver driver;
+
+    // Constructor Injection
+    public Car(Engine engine, Driver driver) {
+        this.engine = engine;
+        this.driver = driver;
+    }
+
+    public void start() {
+        engine.start();
+        System.out.println("Car started by " + driver.getName());
+    }
+}
+```
+And a Driver class:
+```java
+public class Driver {
+    private final String name;
+
+    public Driver(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+```
+Let's create bean definitions for these classes in an XML configuration file (beans.xml):
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Define the Engine bean -->
+    <bean id="gasolineEngine" class="com.example.GasolineEngine"/>
+
+    <!-- Define the Driver bean -->
+    <bean id="johnDriver" class="com.example.Driver">
+        <constructor-arg value="John"/>
+    </bean>
+
+    <!-- Define the Car bean with constructor injection -->
+    <bean id="car" class="com.example.Car">
+        <constructor-arg ref="gasolineEngine"/>
+        <constructor-arg ref="johnDriver"/>
+    </bean>
+
+</beans>
+```
+Now, let's access the beans in a Java application:
+```java
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class MainApp {
+
+    public static void main(String[] args) {
+        // Load the application context
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+
+        // Get the car bean
+        Car car = (Car) context.getBean("car");
+
+        // Use the car
+        car.start();
+    }
+}
+```
+Injecting objects into Spring beans is a fundamental concept for managing dependencies. Whether through constructor injection, setter injection, or autowiring, Spring provides flexibility in configuring and managing the relationships between objects.
+
+
+## Spring Tutorial 07 - Inner Beans, Aliases, and Idref
+
+### Overview
+
+Welcome to Spring Tutorial 08: Inner Beans, Aliases, and Idref. This tutorial explores advanced Spring concepts, including the use of inner beans, aliases, and the idref attribute, providing more control and flexibility in managing your bean configurations.
+
+### Inner Beans
+
+In Spring, an inner bean is a bean definition that is scoped to the enclosing bean and cannot be referenced from outside that bean. This is useful when a bean is used only within the context of another bean.
+
+#### Example
+
+Consider a `Car` class that has a nested `Engine`:
+
+```java
+public class Car {
+    private final Engine engine;
+
+    // Constructor with inner bean
+    public Car(Engine engine) {
+        this.engine = engine;
+    }
+
+    // Getter for Engine
+    public Engine getEngine() {
+        return engine;
+    }
+}
+```
+In the beans.xml configuration file:
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Define the Car bean with an inner Engine bean -->
+    <bean id="car" class="com.example.Car">
+        <property name="engine">
+            <bean class="com.example.Engine"/>
+        </property>
+    </bean>
+
+</beans>
+```
+In this example, the Engine bean is an inner bean of the Car bean, meaning it is encapsulated within the Car bean and cannot be referenced from outside.
+
+
+### Aliases
+
+Aliases provide an additional name for a bean definition, allowing multiple names to refer to the same bean. This can be helpful for backward compatibility or providing alternative names for beans.
+
+```xml
+<bean id="car" class="com.example.Car"/>
+
+<!-- Create an alias for the "car" bean -->
+<alias name="automobile" alias="car"/>
+```
+In this example, both "car" and "automobile" refer to the same Car bean.
+
+
+### Idref Attribute
+The idref attribute is used to reference another bean by its id. This is particularly useful when you want to inject the id of one bean into another.
+
+```xml
+<bean id="driver" class="com.example.Driver"/>
+
+<!-- Reference the "driver" bean using idref -->
+<bean id="car" class="com.example.Car">
+    <property name="driver" idref="driver"/>
+</bean>
+```
+In this example, the driver property of the Car bean is set to the id of the Driver bean.
+
+
+
+## Spring Tutorial 08 - Initializing Collections
+
+### Overview
+
+Welcome to Spring Tutorial 09: Initializing Collections. In this tutorial, we'll explore how Spring allows you to initialize collections such as lists, sets, and maps as bean properties, providing a convenient way to manage and inject complex data structures.
+
+### Initializing Collections in Spring
+
+Spring provides various ways to initialize collections within bean definitions. This is particularly useful when you need to inject a collection of values or other beans into a property of a Spring bean.
+
+#### Initializing Lists
+
+To initialize a list in Spring, you can use the `<list>` element in the XML configuration file. Here's an example:
+
+```xml
+<bean id="exampleBean" class="com.example.ExampleBean">
+    <property name="exampleList">
+        <list>
+            <value>Value 1</value>
+            <value>Value 2</value>
+            <value>Value 3</value>
+        </list>
+    </property>
+</bean>
+```
+In this example, the ExampleBean class has a property named exampleList of type List<String>, and it's initialized with three values.
+
+#### Initializing Sets
+
+For sets, you can use the <set> element:
+
+```xml
+<bean id="exampleBean" class="com.example.ExampleBean">
+    <property name="exampleSet">
+        <set>
+            <value>Value A</value>
+            <value>Value B</value>
+            <value>Value C</value>
+        </set>
+    </property>
+</bean>
+```
+In this case, the ExampleBean class has a property named exampleSet of type Set<String>.
+
+#### Initializing Maps
+
+To initialize maps, you can use the <map> element:
+
+```xml
+<bean id="exampleBean" class="com.example.ExampleBean">
+    <property name="exampleMap">
+        <map>
+            <entry key="Key 1" value="Value X"/>
+            <entry key="Key 2" value="Value Y"/>
+            <entry key="Key 3" value="Value Z"/>
+        </map>
+    </property>
+</bean>
+```
+Here, the ExampleBean class has a property named exampleMap of type Map<String, String>.
+
+Initializing collections in Spring allows you to manage complex data structures within your bean configurations. Whether you're dealing with lists, sets, or maps, Spring provides a convenient and declarative way to define and inject these collections.
+
+
+
+## Spring Tutorial 9 - Bean Autowiring
+
+### Overview
+
+Welcome to Spring Tutorial 10: Bean Autowiring. In this tutorial, we'll explore the concept of autowiring in Spring, a powerful feature that simplifies the configuration of bean dependencies by automatically injecting the required beans.
+
+### What is Autowiring?
+
+Autowiring is a feature in Spring that allows the automatic injection of bean dependencies without explicitly specifying them in the bean configuration file. Spring can automatically discover the relationships between beans and wire them together based on certain rules.
+
+### Types of Autowiring
+
+Spring supports several autowiring modes, each determining how beans are automatically wired together. The common autowiring modes include:
+
+1. **No Autowiring (`autowire="no"`):** This is the default mode. It means no autowiring, and you need to explicitly specify bean dependencies.
+
+2. **Autowiring by Type (`autowire="byType"`):** Spring looks for a single bean of the same type as the property, and if found, it injects it.
+
+3. **Autowiring by Name (`autowire="byName"`):** Spring looks for a bean with a matching name as the property, and if found, it injects it.
+
+4. **Autowiring by Constructor (`autowire="constructor"`):** Similar to autowiring by type but applies to constructor arguments.
+
+### Autowiring by Name Example
+
+Suppose you have the following classes:
+
+```java
+public class Engine {
+    // Engine implementation
+}
+```
+```java
+public class Car {
+    private Engine carEngine;
+
+    private Engine engine;  // Corrected property name
+}
+```
+
+Now, let's define the beans in the Spring configuration file with autowiring by name:
+
+```xml
+<!-- Define the Engine bean -->
+<bean id="engine" class="com.example.Engine" />
+
+<!-- Define the Car bean with autowiring by name -->
+<bean id="car" class="com.example.Car" autowire="byName" />
+```
+In this example, Spring will automatically inject the Engine bean into the Car bean because the property name (carEngine) matches the name of the Engine bean (engine).
+
+
+### Autowiring by Constructor Example
+
+Suppose you have the following classes:
+
+```java
+public interface Engine {
+    void start();
+}
+```
+```java
+public class GasolineEngine implements Engine {
+    // GasolineEngine implementation
+}
+```
+```java
+public class ElectricEngine implements Engine {
+    // ElectricEngine implementation
+}
+```
+```java
+public class Car {
+    private final Engine carEngine;
+
+    // Constructor with autowiring by constructor
+    public Car(Engine carEngine) {
+        this.carEngine = carEngine;
+    }
+
+    // Method using carEngine
+    public void startCar() {
+        carEngine.start();
+    }
+}
+```
+
+Now, let's define the beans in the Spring configuration file with autowiring by constructor:
+
+```xml
+<!-- Define the GasolineEngine bean -->
+<bean id="gasolineEngine" class="com.example.GasolineEngine" />
+
+<!-- Define the Car bean with autowiring by constructor -->
+<bean id="car" class="com.example.Car" autowire="constructor" />
+```
+
+In this example, Spring will automatically inject the GasolineEngine bean into the Car bean's constructor because it matches the constructor parameter type (Engine).
+
+
+
+## Spring Tutorial 10 - Understanding Bean Scopes
+
+### Overview
+
+Welcome to Spring Tutorial 11: Understanding Bean Scopes. In this tutorial, we'll delve into the concept of bean scopes in the Spring framework. Bean scope defines the lifecycle and visibility of a bean within the Spring container.
+
+### Bean Scopes in Spring
+
+Spring supports various bean scopes, each specifying how long a bean should live and when it should be created or destroyed. The common bean scopes include:
+
+1. **Singleton Scope (Default):** The bean is a singleton within the Spring container, and there is only one instance for the entire application context.
+
+2. **Prototype Scope:** A new instance of the bean is created every time it is requested.
+
+3. **Request Scope:** The bean is created once per HTTP request. Applicable to web-aware Spring applications.
+
+4. **Session Scope:** The bean is created once per HTTP session. Applicable to web-aware Spring applications.
+
+5. **Application Scope:** The bean is created once per ServletContext. Applicable to web-aware Spring applications.
+
+### Setting Bean Scope in Spring
+
+You can specify the scope of a bean using the `scope` attribute in the bean definition.
+
+### Example:
+
+```xml
+<!-- Singleton Scope (default) -->
+<bean id="singletonBean" class="com.example.SingletonBean" />
+
+<!-- Prototype Scope -->
+<bean id="prototypeBean" class="com.example.PrototypeBean" scope="prototype" />
+
+<!-- Request Scope -->
+<bean id="requestBean" class="com.example.RequestBean" scope="request" />
+
+<!-- Session Scope -->
+<bean id="sessionBean" class="com.example.SessionBean" scope="session" />
+
+<!-- Application Scope -->
+<bean id="applicationBean" class="com.example.ApplicationBean" scope="application" />
+```
+In this example, SingletonBean has the default singleton scope, while PrototypeBean, RequestBean, SessionBean, and ApplicationBean have different custom scopes.
+
+
+## Spring Tutorial 11 - Using ApplicationContextAware
+
+### Overview
+
+Welcome to Spring Tutorial 12: Using ApplicationContextAware. In this tutorial, we'll explore the ApplicationContextAware interface in the Spring framework and understand how it enables beans to gain awareness of the application context.
+
+### ApplicationContextAware Interface
+
+The ApplicationContextAware interface is part of the Spring framework and provides a mechanism for beans to be aware of the application context in which they are deployed. Beans that implement this interface can access the ApplicationContext and perform operations based on the context.
+
+### Implementation Example
+
+To use ApplicationContextAware, a bean needs to implement the interface and override the setApplicationContext method. This method is called by the Spring container during bean initialization, passing the ApplicationContext as an argument.
+
+### Example:
+Let's consider an example where a bean implements ApplicationContextAware to access another bean, specifically a Car bean, from within the application context.
+```java
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
+public class MyBean implements ApplicationContextAware {
+
+    private ApplicationContext applicationContext;
+
+    @Override
+    public void setApplicationContext(ApplicationContext context) {
+        this.applicationContext = context;
+    }
+
+    // Method to access the Car bean and perform an operation
+    public void performCarOperation() {
+        // Accessing the Car bean from the context
+        Car car = applicationContext.getBean(Car.class);
+
+        // Perform some operation using the Car bean
+        System.out.println("Performing operation on the Car bean: " + car.start());
+    }
+}
+```
+
+In this example:
+
+- MyBean implements the ApplicationContextAware interface.
+- The setApplicationContext method is overridden to store the reference to the application context.
+- The performCarOperation method demonstrates how to access the Car bean from the application context and perform an operation.
+
+Assuming you have a Car class:
+
+```java
+public class Car {
+    public String start() {
+        return "Car started!";
+    }
+}
+```
+
+And your Spring configuration:
+
+```xml
+<bean id="myBean" class="com.example.MyBean" />
+
+<bean id="car" class="com.example.Car" />
+```
+
+### Use Cases
+- Accessing Other Beans: Beans can use the ApplicationContext to obtain references to other beans in the application context.
+
+- Dynamic Bean Configuration: Beans can dynamically configure themselves or perform operations based on the context information.
+
+The ApplicationContextAware interface is a powerful tool for beans that need access to the broader application context. It allows for dynamic interactions and collaborations between beans within a Spring application.
+
+
 
 
 
