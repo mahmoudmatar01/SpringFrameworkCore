@@ -127,6 +127,62 @@ In this example, the Car class is injected with an Engine implementation, either
 
 
 
+## Spring Tutorial 02 - Setting Up
+
+### Overview
+
+Welcome to Spring Tutorial 02: Setting Up. In this tutorial, we'll guide you through the process of setting up your development environment for Spring framework development. Proper setup ensures a smooth development experience and allows you to leverage the full power of Spring for building robust Java applications.
+
+### Prerequisites
+
+Before setting up your Spring development environment, make sure you have the following prerequisites installed:
+
+1. **Java Development Kit (JDK):** Spring is a Java-based framework, so you need to have JDK installed on your machine. You can download the latest version from [Oracle JDK](https://www.oracle.com/java/technologies/javase-downloads.html) or use [OpenJDK](https://adoptopenjdk.net/).
+
+2. **Integrated Development Environment (IDE):** Choose an IDE that suits your preferences. Popular choices include [Eclipse](https://www.eclipse.org/downloads/), [IntelliJ IDEA](https://www.jetbrains.com/idea/download/), or [Visual Studio Code](https://code.visualstudio.com/). Make sure your IDE supports Java development.
+
+### Setting Up a Spring Project
+
+Now, let's create a simple Spring project to verify your setup. Follow these steps:
+
+### Step 1: Install Build Tool (Optional)
+
+You can use a build tool like [Apache Maven](https://maven.apache.org/) or [Gradle](https://gradle.org/) to manage dependencies and build your project. If you don't have Maven or Gradle installed, consider installing one of them.
+
+### Step 2: Create a Spring Project
+
+#### Using Spring Initializr (Online)
+
+1. Visit [Spring Initializr](https://start.spring.io/).
+2. Choose your project settings, including project type, language (Java), Spring Boot version, and dependencies.
+3. Click "Generate" to download the project ZIP file.
+
+#### Using IDE (Eclipse as an example)
+
+1. Open your IDE and create a new Maven or Gradle project.
+2. Add the necessary Spring dependencies to your project configuration.
+
+### Step 3: Verify Your Setup
+
+Create a simple "Hello, Spring!" application. Here's an example using Spring Boot:
+
+```java
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class HelloSpringApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(HelloSpringApplication.class, args);
+    }
+}
+```
+
+### Step 4: Run the Application
+Run your Spring application and navigate to http://localhost:8080 in your web browser. If everything is set up correctly, you should see a "Whitelabel Error Page" indicating that your Spring application is running.
+
+
 
 
 
