@@ -41,3 +41,93 @@ public class HelloWorld {
 }
 ```
 
+
+# Dependency Injection in Spring (Spring Tutorial 01)
+
+## What is Dependency Injection?
+
+**Dependency Injection (DI)** is a design pattern used in software development, including Spring. It addresses the coupling between classes by allowing the inversion of control over their dependencies. In simpler terms, instead of a class creating its dependencies, they are injected from the outside.
+
+## Advantages of Dependency Injection
+
+1. **Loose Coupling:** Dependency Injection promotes loose coupling, making it easier to modify, extend, and test code. Changes in one part of the application don't necessarily impact other parts.
+
+2. **Testability:** DI facilitates easier testing by allowing the substitution of real dependencies with mock or test dependencies during unit testing.
+
+3. **Reusability:** Classes become more reusable as they are not tightly coupled to specific implementations of their dependencies.
+
+## Dependency Injection in Spring
+
+In Spring, DI is achieved through:
+
+### Constructor Injection
+
+```java
+public class Car {
+    private Engine engine;
+
+    // Constructor Injection
+    public Car(Engine engine) {
+        this.engine = engine;
+    }
+
+    // ...
+}
+```
+
+### Setter Injection
+```java
+public class Car {
+    private Engine engine;
+
+    // Setter Injection
+    public void setEngine(Engine engine) {
+        this.engine = engine;
+    }
+
+    // ...
+}
+```
+
+## Example: Spring Dependency Injection
+```java
+public interface Engine {
+    void start();
+}
+
+public class GasolineEngine implements Engine {
+    @Override
+    public void start() {
+        System.out.println("Gasoline engine started");
+    }
+}
+
+public class ElectricEngine implements Engine {
+    @Override
+    public void start() {
+        System.out.println("Electric engine started");
+    }
+}
+
+public class Car {
+    private Engine engine;
+
+    // Constructor Injection
+    public Car(Engine engine) {
+        this.engine = engine;
+    }
+
+    public void start() {
+        engine.start();
+        System.out.println("Car started!");
+    }
+}
+```
+In this example, the Car class is injected with an Engine implementation, either GasolineEngine or ElectricEngine. This enables the flexibility to switch between different engine implementations without modifying the Car class.
+
+
+
+
+
+
+
