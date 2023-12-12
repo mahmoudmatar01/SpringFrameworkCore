@@ -269,7 +269,7 @@ In this example, we use the XmlBeanFactory to load the bean definitions from the
 
 ### Overview
 
-Welcome to Spring Tutorial 05: ApplicationContext and Property Initialization. This tutorial explores the ApplicationContext in Spring and how it facilitates property initialization for beans.
+Welcome to Spring Tutorial 04: ApplicationContext and Property Initialization. This tutorial explores the ApplicationContext in Spring and how it facilitates property initialization for beans.
 
 ### ApplicationContext
 
@@ -340,7 +340,7 @@ In the upcoming tutorials, we'll explore more advanced topics related to Spring 
 
 ### Overview
 
-Welcome to Spring Tutorial 06: Using Constructor Injection. This tutorial explores the concept of constructor injection in the Spring framework, demonstrating how to wire dependencies between beans using this powerful technique.
+Welcome to Spring Tutorial 05: Using Constructor Injection. This tutorial explores the concept of constructor injection in the Spring framework, demonstrating how to wire dependencies between beans using this powerful technique.
 
 ### Constructor Injection
 
@@ -447,7 +447,7 @@ In this example, the Car class receives an Engine dependency through constructor
 
 ### Overview
 
-Welcome to Spring Tutorial 07: Injecting Objects. This tutorial explores the various ways Spring allows you to inject objects into your beans, providing flexibility and ease of managing dependencies.
+Welcome to Spring Tutorial 06: Injecting Objects. This tutorial explores the various ways Spring allows you to inject objects into your beans, providing flexibility and ease of managing dependencies.
 
 ### Injecting Objects in Spring
 
@@ -542,7 +542,7 @@ Injecting objects into Spring beans is a fundamental concept for managing depend
 
 ### Overview
 
-Welcome to Spring Tutorial 08: Inner Beans, Aliases, and Idref. This tutorial explores advanced Spring concepts, including the use of inner beans, aliases, and the idref attribute, providing more control and flexibility in managing your bean configurations.
+Welcome to Spring Tutorial 07: Inner Beans, Aliases, and Idref. This tutorial explores advanced Spring concepts, including the use of inner beans, aliases, and the idref attribute, providing more control and flexibility in managing your bean configurations.
 
 ### Inner Beans
 
@@ -617,7 +617,7 @@ In this example, the driver property of the Car bean is set to the id of the Dri
 
 ### Overview
 
-Welcome to Spring Tutorial 09: Initializing Collections. In this tutorial, we'll explore how Spring allows you to initialize collections such as lists, sets, and maps as bean properties, providing a convenient way to manage and inject complex data structures.
+Welcome to Spring Tutorial 08: Initializing Collections. In this tutorial, we'll explore how Spring allows you to initialize collections such as lists, sets, and maps as bean properties, providing a convenient way to manage and inject complex data structures.
 
 ### Initializing Collections in Spring
 
@@ -682,7 +682,7 @@ Initializing collections in Spring allows you to manage complex data structures 
 
 ### Overview
 
-Welcome to Spring Tutorial 10: Bean Autowiring. In this tutorial, we'll explore the concept of autowiring in Spring, a powerful feature that simplifies the configuration of bean dependencies by automatically injecting the required beans.
+Welcome to Spring Tutorial 9: Bean Autowiring. In this tutorial, we'll explore the concept of autowiring in Spring, a powerful feature that simplifies the configuration of bean dependencies by automatically injecting the required beans.
 
 ### What is Autowiring?
 
@@ -782,7 +782,7 @@ In this example, Spring will automatically inject the GasolineEngine bean into t
 
 ### Overview
 
-Welcome to Spring Tutorial 11: Understanding Bean Scopes. In this tutorial, we'll delve into the concept of bean scopes in the Spring framework. Bean scope defines the lifecycle and visibility of a bean within the Spring container.
+Welcome to Spring Tutorial 10: Understanding Bean Scopes. In this tutorial, we'll delve into the concept of bean scopes in the Spring framework. Bean scope defines the lifecycle and visibility of a bean within the Spring container.
 
 ### Bean Scopes in Spring
 
@@ -827,7 +827,7 @@ In this example, SingletonBean has the default singleton scope, while PrototypeB
 
 ### Overview
 
-Welcome to Spring Tutorial 12: Using ApplicationContextAware. In this tutorial, we'll explore the ApplicationContextAware interface in the Spring framework and understand how it enables beans to gain awareness of the application context.
+Welcome to Spring Tutorial 11: Using ApplicationContextAware. In this tutorial, we'll explore the ApplicationContextAware interface in the Spring framework and understand how it enables beans to gain awareness of the application context.
 
 ### ApplicationContextAware Interface
 
@@ -896,5 +896,43 @@ The ApplicationContextAware interface is a powerful tool for beans that need acc
 
 
 
+## Spring Tutorial 12 - Bean Definition Inheritance
+
+### Overview
+
+Welcome to Spring Tutorial 12: Bean Definition Inheritance. In this tutorial, we'll explore the concept of bean definition inheritance in the Spring framework. Bean definition inheritance allows one bean definition to inherit configurations from another, promoting code reuse and maintainability.
+
+### Bean Definition Inheritance in Spring
+
+Inheritance in Spring involves creating a parent-child relationship between bean definitions. The child bean inherits the configuration of the parent bean and can customize or override specific settings.
+
+### Implementation Example
+
+Consider the following example with a parent bean definition:
+
+```xml
+<!-- Parent Bean Definition -->
+<bean id="parentBean" class="com.example.ParentBean">
+    <property name="property1" value="defaultValue1" />
+    <property name="property2" value="defaultValue2" />
+</bean>
+```
+
+Now, let's create a child bean definition that inherits from the parent:
+
+```xml
+<!-- Child Bean Definition -->
+<bean id="childBean" class="com.example.ChildBean" parent="parentBean">
+    <property name="property1" value="customValue1" />
+</bean>
+```
+In this example, the childBean inherits the properties property1 and property2 from parentBean. Additionally, it overrides property1 with a custom 
+
+### Use Cases
+- Code Reusability: Bean definition inheritance promotes code reuse by allowing common configurations to be defined in a parent bean.
+
+- Customization: Child beans can customize or override specific properties or settings inherited from the parent.
+
+Bean definition inheritance in Spring provides a powerful mechanism for structuring and organizing bean configurations. It encourages a modular and maintainable configuration strategy, especially when dealing with similar beans that share common settings.
 
 
