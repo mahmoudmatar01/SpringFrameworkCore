@@ -936,3 +936,93 @@ In this example, the childBean inherits the properties property1 and property2 f
 Bean definition inheritance in Spring provides a powerful mechanism for structuring and organizing bean configurations. It encourages a modular and maintainable configuration strategy, especially when dealing with similar beans that share common settings.
 
 
+
+## Spring Tutorial 13 - Lifecycle Callbacks
+
+### Overview
+
+Welcome to Spring Tutorial 13: Lifecycle Callbacks. In this tutorial, we'll explore the lifecycle callbacks in the Spring framework. Lifecycle callbacks allow beans to execute custom logic during different phases of their lifecycle, such as initialization and destruction.
+
+### Bean Lifecycle in Spring
+
+The lifecycle of a Spring bean involves several phases:
+
+1. **Instantiation:** The bean is created.
+2. **Population of Properties:** Bean properties are set.
+3. **BeanPostProcessor:** If registered, BeanPostProcessor methods are called.
+4. **Initialization Callbacks:** Custom initialization methods are invoked.
+5. **Bean Ready for Use:** The bean is now ready for use.
+6. **Destruction Callbacks:** Custom destruction methods are invoked during bean destruction.
+
+### Initialization Callbacks
+
+#### InitializingBean Interface
+
+The `InitializingBean` interface provides a method, `afterPropertiesSet()`, which is called by the Spring container after property population. Example:
+
+```java
+import org.springframework.beans.factory.InitializingBean;
+
+public class MyBean implements InitializingBean {
+
+    @Override
+    public void afterPropertiesSet() {
+        // Custom initialization logic
+    }
+}
+```
+
+### @PostConstruct Annotation
+
+The @PostConstruct annotation can be used on a method to indicate that it should be invoked after properties are set. Example:
+
+```java
+import javax.annotation.PostConstruct;
+
+public class MyBean {
+
+    @PostConstruct
+    public void customInit() {
+        // Custom initialization logic
+    }
+}
+```
+
+### Destruction Callbacks
+
+#### DisposableBean Interface
+
+The DisposableBean interface provides a method, destroy(), which is called during bean destruction. Example:
+
+```java
+import org.springframework.beans.factory.DisposableBean;
+
+public class MyBean implements DisposableBean {
+
+    @Override
+    public void destroy() {
+        // Custom destruction logic
+    }
+}
+```
+
+### @PreDestroy Annotation
+
+The @PreDestroy annotation can be used on a method to indicate that it should be invoked before the bean is destroyed. Example:
+```java
+import javax.annotation.PreDestroy;
+
+public class MyBean {
+
+    @PreDestroy
+    public void customDestroy() {
+        // Custom destruction logic
+    }
+}
+
+```
+Lifecycle callbacks provide a way to execute custom logic during different phases of a bean's lifecycle. Choosing the appropriate method depends on your preference and whether you prefer interface-based or annotation-based configuration.
+
+
+
+
