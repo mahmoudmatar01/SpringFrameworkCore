@@ -4,7 +4,7 @@ Welcome to the Spring Framework tutorials repository! This series is designed to
 
 ## Table of Contents
 
-1. [Introduction to Spring Framework (Spring Tutorial 00)](#Introduction-to-Spring-Framework-(-Spring-Tutorial-00-)-)
+1. [Spring Tutorial 00 - Introduction to Spring Framework ](#Spring-Tutorial-00---Introduction-to-Spring-Framework)
 2. [Spring Tutorial 01 - Dependency Injection in Spring](#Spring-Tutorial-01---Dependency-Injection-in-Spring)
 3. [Spring Tutorial 02 - Setting Up](#spring-tutorial-02---setting-up)
 4. [Spring Tutorial 03 - Understanding Spring Bean Factory](#spring-tutorial-03---understanding-spring-bean-factory)
@@ -23,7 +23,7 @@ Welcome to the Spring Framework tutorials repository! This series is designed to
 17. [Spring Tutorial 16 - The `@Autowired` Annotation](#spring-tutorial-16---the-autowired-annotation)
 
 
-## Introduction to Spring Framework (Spring Tutorial 00)
+## Spring Tutorial 00 - Introduction to Spring Framework 
 
 ### Overview
 
