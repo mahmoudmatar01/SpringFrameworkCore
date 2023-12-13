@@ -1046,7 +1046,7 @@ Lifecycle callbacks provide a way to execute custom logic during different phase
 
 
 
-## Spring Tutorial 14: Coding To Interfaces
+## Spring Tutorial 14 - Coding To Interfaces
 
 In Spring Tutorial 14, we explore the fundamental design principle of "Coding To Interfaces." This approach enhances the flexibility, modularity, and maintainability of Spring applications by encouraging developers to program against interfaces instead of concrete implementations. The tutorial discusses the benefits of this practice and provides a hands-on example of implementing coding to interfaces in a Spring project.
 
@@ -1118,7 +1118,7 @@ Coding to interfaces is a fundamental practice in Spring development, enhancing 
 
 
 
-## Spring Tutorial 15: Introduction to Annotations and the `@Required` Annotation
+## Spring Tutorial 15 - Introduction to Annotations and the `@Required` Annotation
 
 ### Overview
 
@@ -1198,7 +1198,7 @@ In this example, the Person class has a name property marked with the @Required 
 
 
 
-## Spring Tutorial 16: The `@Autowired` Annotation
+## Spring Tutorial 16 - The `@Autowired` Annotation
 
 This topic contains documentation for Spring Tutorial 16, which provides an in-depth exploration of the `@Autowired` annotation in the Spring Framework. The tutorial focuses on the usage and benefits of `@Autowired` for automatic dependency injection, simplifying configuration and improving code readability.
 
