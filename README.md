@@ -4,8 +4,8 @@ Welcome to the Spring Framework tutorials repository! This series is designed to
 
 ## Table of Contents
 
-1. [Introduction to Spring Framework (Spring Tutorial 00)](#Introduction-to-Spring-Framework (Spring Tutorial 00))
-2. [Spring Tutorial 01 - Dependency Injection in Spring](#dependency-injection-in-spring)
+1. [Introduction to Spring Framework (Spring Tutorial 00)](#Introduction-to-Spring-Framework-(-Spring-Tutorial-00-)-)
+2. [Spring Tutorial 01 - Dependency Injection in Spring](#Spring-Tutorial-01---Dependency-Injection-in-Spring)
 3. [Spring Tutorial 02 - Setting Up](#spring-tutorial-02---setting-up)
 4. [Spring Tutorial 03 - Understanding Spring Bean Factory](#spring-tutorial-03---understanding-spring-bean-factory)
 5. [Spring Tutorial 04 - ApplicationContext and Property Initialization](#spring-tutorial-04---applicationcontext-and-property-initialization)
@@ -63,7 +63,7 @@ public class HelloWorld {
 ```
 
 
-## Dependency Injection in Spring (Spring Tutorial 01)
+## Spring Tutorial 01 - Dependency Injection in Spring
 
 ### What is Dependency Injection?
 
