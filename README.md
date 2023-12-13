@@ -1,4 +1,4 @@
-# Spring Framework Tutorials
+# Core Spring Framework Tutorials
 
 Welcome to the Spring Framework tutorials repository! This series is designed to provide you with a solid foundation in the Spring framework, a versatile and widely used framework for building Java-based enterprise applications. Let's dive into the first two tutorials:
 
@@ -1023,6 +1023,298 @@ public class MyBean {
 ```
 Lifecycle callbacks provide a way to execute custom logic during different phases of a bean's lifecycle. Choosing the appropriate method depends on your preference and whether you prefer interface-based or annotation-based configuration.
 
+
+
+## Spring Tutorial 13: Coding To Interfaces
+
+In Spring Tutorial 13, we explore the fundamental design principle of "Coding To Interfaces." This approach enhances the flexibility, modularity, and maintainability of Spring applications by encouraging developers to program against interfaces instead of concrete implementations. The tutorial discusses the benefits of this practice and provides a hands-on example of implementing coding to interfaces in a Spring project.
+
+### Benefits of Coding To Interfaces in Spring
+
+1. **Flexibility:**
+   - Programming against interfaces allows for seamless substitution of implementations, promoting adaptability in the application.
+
+2. **Modularity:**
+   - Interfaces define clear contracts between components, leading to a modular design that facilitates maintenance.
+
+3. **Dependency Injection (DI):**
+   - Coding to interfaces enables Spring to perform dependency injection, simplifying component management and testing.
+
+4. **Unit Testing:**
+   - The use of interfaces facilitates unit testing by allowing the creation of mock implementations for testing purposes.
+
+### Example: Coding To Interfaces in Spring
+
+### Step 1: Define an Interface
+
+```java
+public interface UserService {
+    User getUserById(String userId);
+}
+```
+
+### Step 2: Create a Concrete Implementation
+
+```java
+public class DatabaseUserService implements UserService {
+    public User getUserById(String userId) {
+        // Implementation to retrieve user from a database
+    }
+}
+```
+
+### Step 3: Configuration in Spring
+
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Define the bean using the interface -->
+    <bean id="userService" class="com.example.DatabaseUserService" />
+</beans>
+
+```
+
+### Step 4: Using the Service
+
+```java
+public class UserController {
+    private final UserService userService;
+
+    // Constructor injection
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    public void displayUserInfo(String userId) {
+        User user = userService.getUserById(userId);
+        // Display user information
+    }
+}
+```
+Coding to interfaces is a fundamental practice in Spring development, enhancing the maintainability and flexibility of applications. By adopting this approach, developers can create modular and testable components, leading to a robust and adaptable application architecture.
+
+
+
+## Spring Tutorial 14: Introduction to Annotations and the `@Required` Annotation
+
+### Overview
+
+This topic contains documentation for Spring Tutorial 14, providing an introduction to annotations in the Spring Framework and focusing on the usage of the `@Required` annotation. Annotations play a crucial role in simplifying configuration and expressing metadata about application components. The `@Required` annotation is specifically explored in this tutorial, highlighting its importance in enforcing the requirement of specific properties during bean initialization.
+
+### Introduction to Annotations
+
+Annotations in Spring are markers added to Java classes, methods, or fields to provide additional information to the Spring container. They simplify configuration and enhance the readability of the code. Commonly used annotations in Spring include `@Component`, `@Autowired`, `@Service`, and `@Repository`.
+
+### The `@Required` Annotation
+
+The `@Required` annotation is used to indicate that the affected bean property must be populated during bean initialization. If the required property is not set, the Spring container throws a `BeanInitializationException`.
+
+### Usage Example
+
+Consider a class representing a `Person` with a required property `name`. We can use the `@Required` annotation to ensure that the `name` property is set before the bean is fully initialized.
+
+```java
+import org.springframework.beans.factory.annotation.Required;
+
+public class Person {
+    private String name;
+
+    @Required
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+```
+
+### MainApp.java
+
+```java
+import org.springframework.beans.factory.BeanInitializationException;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class MainApp {
+
+    public static void main(String[] args) {
+        AbstractApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+
+        try {
+            // Attempt to get the Person bean
+            Person person = (Person) context.getBean("person");
+
+            // Display the person's name
+            System.out.println("Person's Name: " + person.getName());
+        } catch (BeanInitializationException e) {
+            System.err.println("Error: " + e.getMessage());
+        } finally {
+            context.close();
+        }
+    }
+}
+```
+
+### applicationContext.xml
+
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Define the Person bean -->
+    <bean id="person" class="Person" />
+
+</beans>
+```
+
+
+In this example, the Person class has a name property marked with the @Required annotation. The MainApp class attempts to retrieve the Person bean from the Spring container. If the name property is not set in the XML configuration, a BeanInitializationException will be thrown.
+
+
+
+## Spring Tutorial 15: The `@Autowired` Annotation
+
+This topic contains documentation for Spring Tutorial 15, which provides an in-depth exploration of the `@Autowired` annotation in the Spring Framework. The tutorial focuses on the usage and benefits of `@Autowired` for automatic dependency injection, simplifying configuration and improving code readability.
+
+### Introduction to `@Autowired`
+
+The `@Autowired` annotation is a powerful feature in Spring, enabling automatic dependency injection. It eliminates the need for explicit bean wiring in the Spring configuration file, promoting cleaner code and improved maintainability. This tutorial explores the various aspects of `@Autowired` and its role in simplifying dependency injection in Spring.
+
+### Usage of `@Autowired`
+
+#### Field Injection
+
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class CarService {
+    @Autowired
+    private Engine engine;
+
+    // other methods
+}
+```
+
+#### Constructor Injection
+
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class CarService {
+    private final Engine engine;
+
+    @Autowired
+    public CarService(Engine engine) {
+        this.engine = engine;
+    }
+
+    // other methods
+}
+```
+
+#### Setter Injection
+
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class CarService {
+    private Engine engine;
+
+    @Autowired
+    public void setEngine(Engine engine) {
+        this.engine = engine;
+    }
+
+    // other methods
+}
+```
+
+#### Method Injection
+
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class CarService {
+    private Engine engine;
+
+    @Autowired
+    public void injectEngine(Engine engine) {
+        this.engine = engine;
+    }
+
+    // other methods
+}
+```
+
+### Qualifiers with `@Autowired`
+When multiple beans of the same type exist in the container, the @Autowired annotation may cause ambiguity. In such cases, you can use the @Qualifier annotation to specify the exact bean to be injected.
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+public class CarService {
+    @Autowired
+    @Qualifier("v8Engine")
+    private Engine engine;
+
+    // other methods
+}
+```
+
+Engine.java (Interface)
+
+```java
+public interface Engine {
+    String start();
+}
+
+// V8Engine class
+public class V8Engine implements Engine {
+    public String start() {
+        return "V8 Engine started";
+    }
+}
+
+// V6Engine class
+public class V6Engine implements Engine {
+    public String start() {
+        return "V6 Engine started";
+    }
+}
+```
+
+### XML Configuration
+The applicationContext.xml file provides XML-based configuration for the Spring beans used in this tutorial.
+
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- Enable annotation-based configuration -->
+    <context:annotation-config />
+
+    <!-- Define the Engine bean -->
+    <bean id="v6Engine" class="com.example.V6Engine" />
+    <bean id="v8Engine" class="com.example.V8Engine" />
+
+    <!-- Define the CarService bean -->
+    <bean id="carService" class="com.example.CarService" />
+
+</beans>
+```
+In this example, the context:annotation-config element is used to enable annotation-based configuration in the Spring application context. The CarService class, which uses the @Autowired annotation for dependency injection, will automatically have its dependencies injected by Spring.
+
+Make sure to replace the package and class names (com.example.V6Engine, com.example.V8Engine, com.example.CarService) with the appropriate names used in your project.
+
+Additionally, ensure that you have the required Spring libraries in your project, and the classes and interfaces (Engine, V6Engine, V8Engine, CarService) are correctly implemented in your codebase.
 
 
 
