@@ -21,6 +21,7 @@ Welcome to the Spring Framework tutorials repository! This series is designed to
 15. [Spring Tutorial 14 - Coding To Interfaces](#spring-tutorial-14---coding-to-interfaces)
 16. [Spring Tutorial 15 - Introduction to Annotations and the `@Required` Annotation](#spring-tutorial-15---introduction-to-annotations-and-the-required-annotation)
 17. [Spring Tutorial 16 - The `@Autowired` Annotation](#spring-tutorial-16---the-autowired-annotation)
+18. [Spring Tutorial 17 - Component and Stereotype Annotations](#Spring-Tutorial-17---Component-and-Stereotype-Annotations)
 
 
 ## Spring Tutorial 00 - Introduction to Spring Framework 
@@ -1336,6 +1337,133 @@ In this example, the context:annotation-config element is used to enable annotat
 Make sure to replace the package and class names (com.example.V6Engine, com.example.V8Engine, com.example.CarService) with the appropriate names used in your project.
 
 Additionally, ensure that you have the required Spring libraries in your project, and the classes and interfaces (Engine, V6Engine, V8Engine, CarService) are correctly implemented in your codebase.
+
+
+
+
+## Spring Tutorial 17 - Component and Stereotype Annotations
+
+### Overview
+
+This repository contains documentation for Spring Tutorial 17, focusing on Component and Stereotype Annotations in the Spring Framework. These annotations are essential for simplifying bean configuration and promoting a more modular and readable code structure. Explore the usage of Component and Stereotype Annotations to enhance your Spring application development.
+
+### Introduction to Component and Stereotype Annotations
+In Spring, Component and Stereotype annotations are part of the stereotype annotations that help define and configure beans. These annotations reduce the need for explicit bean definitions in XML configuration files, promoting a more concise and readable codebase.
+
+### The `@Component` Annotation
+The @Component annotation is a generic stereotype annotation used to identify a Spring bean. It indicates that the class is a Spring component and should be managed by the Spring container.
+
+#### Example: Creating a Component
+```java
+import org.springframework.stereotype.Component;
+
+@Component
+public class MyComponent {
+    // Class implementation
+}
+```
+In this example, the MyComponent class is annotated with @Component, making it a Spring-managed component. The Spring container will automatically detect and register this class as a bean.
+
+### Stereotype Annotations
+Spring provides several specialized stereotype annotations, including `@Repository`, `@Service`, and `@Controller`. These annotations are used to define beans with specific roles in the application.
+
+- @Repository: Used to indicate that the annotated class is a Data Access Object (DAO) component.
+- @Service: Used to indicate that the annotated class is a service component.
+- @Controller: Used to indicate that the annotated class is a controller component (typically for Spring MVC).
+
+### Example: Using Stereotype Annotations
+```java
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
+
+@Repository
+public class MyRepository {
+    // Repository implementation
+}
+
+@Service
+public class MyService {
+    // Service implementation
+}
+
+@Controller
+public class MyController {
+    // Controller implementation
+}
+```
+In this example, three classes are annotated with specific stereotype annotations (@Repository, @Service, and @Controller). Each annotation provides additional information about the role of the bean in the application.
+
+### Custom Stereotype Annotations
+Using a custom stereotype annotation in Spring involves creating a custom annotation and then applying it to classes in your Spring project. Here's a step-by-step guide on how to use a custom stereotype annotation:
+
+#### Step 1: Create a Custom Stereotype Annotation
+```java
+import org.springframework.stereotype.Component;
+
+import java.lang.annotation.*;
+
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Component
+public @interface MyCustomComponent {
+    // Optional additional elements for customization
+}
+```
+In this example, MyCustomComponent is a custom stereotype annotation. It is annotated with @Component, allowing the annotated classes to be detected and registered by the Spring container.
+
+#### Step 2: Apply the Custom Stereotype Annotation
+
+Apply the @MyCustomComponent annotation to a class to mark it as a Spring component.
+
+```java
+@MyCustomComponent
+public class CustomComponent {
+    // Class implementation
+}
+```
+Now, CustomComponent is a Spring component and will be automatically detected by the Spring container.
+
+#### Step 3: Enable Component Scanning
+Ensure that component scanning is enabled in your Spring configuration. This allows the Spring container to automatically discover and register components marked with your custom stereotype annotation.
+
+In your Spring configuration class (typically annotated with @Configuration), include the following:
+```java
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ComponentScan(basePackages = "com.example") // Replace with your base package
+public class AppConfig {
+    // Additional configuration if needed
+}
+```
+Replace "com.example" with the base package of your application. Component scanning will search for components within this package and its sub-packages.
+
+#### Step 4: Run the Application
+
+With the custom stereotype annotation applied and component scanning enabled, run your Spring application. The Spring container should detect and register the class marked with your custom stereotype annotation.
+
+```java
+public class MainApp {
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+
+        // Retrieve the bean marked with your custom stereotype annotation
+        CustomComponent customComponent = context.getBean(CustomComponent.class);
+
+        // Access methods or properties of the custom component
+        customComponent.doSomething();
+
+        // Close the application context
+        context.close();
+    }
+}
+```
+Replace doSomething() with actual methods or properties of your custom component.
+Now, your custom stereotype annotation is successfully used to mark and register Spring components in your application.
+
 
 
 
