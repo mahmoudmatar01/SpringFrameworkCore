@@ -4,7 +4,7 @@ Welcome to the Spring Framework tutorials repository! This series is designed to
 
 ## Table of Contents
 
-1. [Introduction to Spring Framework](#introduction-to-spring-framework)
+1. [Introduction to Spring Framework (Spring Tutorial 00)](#Introduction-to-Spring-Framework (Spring Tutorial 00))
 2. [Dependency Injection in Spring](#dependency-injection-in-spring)
 3. [Spring Tutorial 02 - Setting Up](#spring-tutorial-02---setting-up)
 4. [Spring Tutorial 03 - Understanding Spring Bean Factory](#spring-tutorial-03---understanding-spring-bean-factory)
