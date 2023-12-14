@@ -1,6 +1,6 @@
 # Core Spring Framework Tutorials
 
-Welcome to the Spring Framework tutorials repository! This series is designed to provide you with a solid foundation in the Spring framework, a versatile and widely used framework for building Java-based enterprise applications. Let's dive into the first two tutorials:
+Welcome to the Spring Framework tutorials repository! This series is designed to provide you with a solid foundation in the Spring framework, a versatile and widely used framework for building Java-based enterprise applications. Let's dive into the Spring Framework tutorials:
 
 ## Table of Contents
 
